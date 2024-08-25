@@ -2,22 +2,26 @@ import React, { useEffect, useState } from 'react';
 
 import CheapRecomends from './CheapRecomends';
 import Sectiontittle from '../../SectionTitle/Sectiontittle';
+import customhook from '../../Custom Hook/customhook';
 
 
 
 const CheapRecomend = () => {
 
-    const [menu,setMenu] = useState([])
+    // const [menu,setMenu] = useState([])
     const [slice,Setslice] = useState(6)
 
-    useEffect(() =>{
-        fetch('menu.json')
-        .then(res => res.json())
-        .then(data => {
-            const SaladItem = data.filter(item => item.category === 'salad')
-            setMenu(SaladItem)
-        })
-    },[])
+    const [menu] = customhook();
+    const Salads = menu.filter(item => item.category === 'salad')
+
+    // useEffect(() =>{
+    //     fetch('menu.json')
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         const SaladItem = data.filter(item => item.category === 'salad')
+    //         setMenu(SaladItem)
+    //     })
+    // },[])
 
     return (
         <section>
@@ -30,7 +34,7 @@ const CheapRecomend = () => {
 
             <div className='grid grid-cols-3 gap-10'>
                {
-                menu.slice(0, slice).map(item => <CheapRecomends
+                Salads.slice(0, slice).map(item => <CheapRecomends
                     key={item._id}
                     item={item}
                 ></CheapRecomends>)
