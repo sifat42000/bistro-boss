@@ -4,7 +4,7 @@ const customhook = () =>{
     const [menu,setMenu] = useState([])
 
     useEffect(() =>{
-        fetch('menu.json')
+        fetch('http://localhost:5000/Menu')
         .then(res => res.json())
         .then(data => setMenu(data))
     },[])

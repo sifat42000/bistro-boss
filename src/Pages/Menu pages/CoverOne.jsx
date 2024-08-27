@@ -1,13 +1,14 @@
 import React from 'react';
-import Sectiontittle from '../../SectionTitle/Sectiontittle';
 
-const CoverOne = ({ coverImg, tittle }) => {
+
+
+const CoverOne = ({img,  tittle }) => {
     return (
         <section>
             <div
                 className="hero h-[550px] mb-24"
                 style={{
-                    backgroundImage: `url("${coverImg}")`,
+                    backgroundImage: `url("${img}")`,
                 }}>
 
 
@@ -32,6 +33,7 @@ const CoverOne = ({ coverImg, tittle }) => {
                 subHeading='Do dot miss'
             ></Sectiontittle>
            </section> */}
+           
 
              
 

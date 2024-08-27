@@ -8,7 +8,9 @@ const Nav = () => {
       
        <li><NavLink to="/">Home</NavLink></li>
        <li><NavLink to="/menu">Menu</NavLink></li>
-       <li><NavLink to="others">Others</NavLink></li>
+       <li><NavLink to="/order/salad">Order Shop</NavLink></li>
+       <li><NavLink to="loging">Loging</NavLink></li>
+       
        
                             
                             </>
@@ -16,7 +18,7 @@ const Nav = () => {
     return (
         <>
           
-           <div className="navbar  fixed z-10 bg-opacity-30 bg-black text-white   max-w-[1128px]">
+           <div className="navbar  fixed z-10 bg-opacity-30 bg-black text-white   max-w-[1088px]">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

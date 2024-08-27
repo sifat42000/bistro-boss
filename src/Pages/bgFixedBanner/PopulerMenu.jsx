@@ -39,7 +39,8 @@ const PopulerMenu = () => {
                     ></PopulersMenu>)
                 }
             </div> */}
-            <MenuCategory item={Popular}></MenuCategory>
+            <div><MenuCategory item={Popular}></MenuCategory></div>
+            
             
         </section>
     );

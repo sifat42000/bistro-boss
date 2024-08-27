@@ -27,9 +27,11 @@ const Menu = () => {
                 <link rel="canonical" href="https://www.tacobell.com/" />
             </Helmet>
             <div>
-               <CoverOne coverImg={pic1} 
+               <CoverOne img={pic1} 
                tittle="Our Menu"
                ></CoverOne>
+               {/* <MenuCategory coverImg={pic1} 
+               tittle="Our Menu"></MenuCategory> */}
 
          { /* Todays offers */}
 
@@ -43,37 +45,61 @@ const Menu = () => {
 
            {/* Desserts */}
 
+           {/* <section className='mb-40'>
+        <CoverOne coverImg={pic2} tittle={"dessert"}></CoverOne>
+               <MenuCategory item={Dessert} ></MenuCategory>
+           </section> */}
            <section className='mb-40'>
-               <p> <CoverOne coverImg={pic2} tittle="Desserts"></CoverOne></p>
-               <MenuCategory item={Dessert}></MenuCategory>
+       
+        <MenuCategory item={Dessert} coverImg={pic2} tittle={"dessert"}></MenuCategory>
            </section>
 
            {/* Pizza */}
 
-           <section className='mb-40'>
+           {/* <section className='mb-40'>
              <CoverOne coverImg={pic3} 
-               tittle="Pizza"></CoverOne>
+               tittle={"pizza"}></CoverOne>
 
-               <MenuCategory item={Pizza}></MenuCategory>
+               <MenuCategory item={Pizza} ></MenuCategory>
+           </section> */}
+           <section className='mb-40'>
+             
+
+               <MenuCategory item={Pizza}  coverImg={pic3} 
+               tittle={"pizza"}></MenuCategory>
            </section>
 
            {/* Salads */}
 
-           <section className='mb-40'>
+           {/* <section className='mb-40'>
            <CoverOne coverImg={pic4} 
-               tittle="Salads"></CoverOne>
+               tittle={"salad"}></CoverOne>
 
-               <MenuCategory item={Salad}></MenuCategory>
+               
+               <MenuCategory item={Salad} ></MenuCategory>
+           </section> */}
+           <section className='mb-40'>
+           
+
+               
+               <MenuCategory item={Salad} coverImg={pic4} 
+               tittle={"salad"}></MenuCategory>
            </section>
 
 
            {/* Soup*/}
 
-           <section className='mb-40'>
+           {/* <section className='mb-40'>
            <CoverOne coverImg={pic5} 
-               tittle="Soups"></CoverOne>
+               tittle={"soup"}></CoverOne>
 
                <MenuCategory item={Soup}></MenuCategory>
+           </section> */}
+           <section className='mb-40'>
+           
+
+               <MenuCategory item={Soup} coverImg={pic5} 
+               tittle={"soup"}></MenuCategory>
            </section>
             </div>
 

@@ -1,6 +1,6 @@
 
 
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../Pages/bgFixedBanner/Footer";
 import Nav from "../Pages/bgFixedBanner/Nav";
 
@@ -8,11 +8,13 @@ import Nav from "../Pages/bgFixedBanner/Nav";
 
 
 const Main = () => {
+    const location = useLocation();
+    const NoNavAndFooter = location.pathname.includes('loging')
     return (
         <div>
-            <Nav></Nav>
+            {NoNavAndFooter || <Nav></Nav>}
         <Outlet></Outlet>
-        <p ><Footer></Footer></p>
+        <p >{NoNavAndFooter || <Footer></Footer>}</p>
         
             
         </div>

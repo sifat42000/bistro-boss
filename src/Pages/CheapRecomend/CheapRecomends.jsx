@@ -13,7 +13,7 @@ const CheapRecomends = ({item}) => {
                 <p>{recipe}</p>
                 </div>
                     
-                <button className='btn btn-neutral'>ADD TO CART</button>  
+                <button className='btn btn-outline'>ADD TO CART</button>  
                 </div>      
         </div>
     );
