@@ -15,6 +15,8 @@ import Home from './Home/Home';
 import Order from './Pages/Menu/Order/OrderMenu/Order';
 import Loging from './Pages/LogingAndRefister/Loging';
 import Authprovider from './Authprovider';
+import Register from './Pages/LogingAndRefister/Register';
+import PrivetRoute from './Pages/PrivetRoute';
 
 
 const router = createBrowserRouter([
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: 'loging',
         element: <Loging></Loging>
+      },
+      {
+        path: 'register',
+        element: <Register></Register>
       }
 
     ]

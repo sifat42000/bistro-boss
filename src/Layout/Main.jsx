@@ -9,12 +9,14 @@ import Nav from "../Pages/bgFixedBanner/Nav";
 
 const Main = () => {
     const location = useLocation();
-    const NoNavAndFooter = location.pathname.includes('loging')
+    const NoNavAndFooter = location.pathname.includes('loging') || location.pathname.includes('register')
+   
+
     return (
         <div>
-            {NoNavAndFooter || <Nav></Nav>}
+            {NoNavAndFooter|| <Nav></Nav>}
         <Outlet></Outlet>
-        <p >{NoNavAndFooter || <Footer></Footer>}</p>
+        <p >{NoNavAndFooter  || <Footer></Footer>}</p>
         
             
         </div>

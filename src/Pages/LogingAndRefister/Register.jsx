@@ -1,72 +1,62 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { Link } from 'react-router-dom';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../Authprovider';
 
+const Register = () => {
+    const TypeRef = useRef(null);
+    const [disabled, setDisabled] = useState(true);
+    const { CreateUser } = useContext(AuthContext);
 
-const Loging = () => {
+    useEffect(() => {
+        loadCaptchaEnginge(6);
+    }, []);
 
-    const {LoginUser} = useContext(AuthContext)
-
-    const TypeRef = useRef(null)
-    const [disabled, setDisabled] = useState(true)
-
-    const Nevigate = useNavigate();
-     
-    useEffect(()=>{
-        loadCaptchaEnginge(6); 
-    },[])
-
-    const handleLoging = e =>{
+    const handleRegister = e => {
         e.preventDefault();
         const form = e.target;
+        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email,password)
+        console.log(name, email, password);
 
-      
-        LoginUser(email, password)
-        .then(result => {
-            console.log(result.user)
-            Nevigate('/')
-            // Setsuccessloging('Congratulations! You have successfully logged in')
-            // {
-            //   successLoging.map(user =><Personalroute user={user} key={user.id}></Personalroute>) 
-            // }
+        CreateUser(email, password)
+            .then(result => {
+                console.log(result.user);
+            })
+            .catch(error => {
+                console.error(error);
+                // setErrorregister(error.message);
+            });
+    };
 
-        })
-        .catch(error => {
-            console.error(error.message)
-            // Seteroorloging(error.message)
-        })
-
-    }
-
-    const handleCaptha = () =>{
+    const handleCaptha = () => {
         const Ref = TypeRef.current.value;
-        if(validateCaptcha(Ref)){
-            setDisabled(false)
+        if (validateCaptcha(Ref)) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
         }
-        else{
-            setDisabled(true)
-        }
-    }
-
+    };
 
     return (
-
-
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold">Login now!</h1>
+                    <h1 className="text-5xl font-bold">Register Now</h1>
                     <p className="py-6">
                         Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
                         quasi. In deleniti eaque aut repudiandae et a id nisi.
                     </p>
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <form onSubmit={handleLoging} className="card-body">
+                    <form onSubmit={handleRegister} className="card-body">
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input type="text" placeholder="Name" name="name" className="input input-bordered" required />
+                        </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -84,16 +74,15 @@ const Loging = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                            <LoadCanvasTemplate />
+                                <LoadCanvasTemplate />
                             </label>
                             <input type="text" ref={TypeRef} placeholder="Type here" name='Captha' className="input input-bordered" required />
-                            <button onClick={handleCaptha}  className="btn btn-outline btn-xs mt-3">Validate</button >
-                           
+                            <button onClick={handleCaptha} className="btn btn-outline btn-xs mt-3">Validate</button>
                         </div>
                         <div className="form-control mt-6">
-                            <button disabled={disabled} className="btn btn-primary">Login</button>
+                            <button disabled={disabled} className="btn btn-primary">Register</button>
                         </div>
-                        <p>You don't have a account? <Link className="btn btn-link" to='/register'>Register</Link></p>
+                        <p>You already have an account? <Link className="btn btn-link" to='/loging'>Log in</Link></p>
                     </form>
                 </div>
             </div>
@@ -101,9 +90,4 @@ const Loging = () => {
     );
 };
 
-export default Loging;
-
-// <Helmet>
-// <title>Bistro Boos | Loging</title>
-// <link rel="canonical" href="https://www.tacobell.com/" />
-// </Helmet>
+export default Register;
