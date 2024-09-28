@@ -17,6 +17,9 @@ import Loging from './Pages/LogingAndRefister/Loging';
 import Authprovider from './Authprovider';
 import Register from './Pages/LogingAndRefister/Register';
 import PrivetRoute from './Pages/PrivetRoute';
+import Dashboard from './Layout/Dashboard';
+import Cart from './Pages/DeshboardContent/Cart';
+import Allusers from './Pages/DeshboardContent/Allusers';
 
 
 const router = createBrowserRouter([
@@ -48,6 +51,26 @@ const router = createBrowserRouter([
     ]
 
   },
+
+  {
+    path: '/dashboard',
+    element: <PrivetRoute><Dashboard></Dashboard></PrivetRoute>,
+    children:[
+      
+      {
+        path: 'cart',
+        element: <Cart></Cart>
+      },
+
+      // Admin panle
+
+      {
+        path : 'AllUsers',
+        element : <Allusers></Allusers>
+      }
+
+    ]
+  }
 ]);
 
 

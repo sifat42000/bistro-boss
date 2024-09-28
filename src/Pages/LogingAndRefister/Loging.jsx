@@ -6,7 +6,9 @@ import { AuthContext } from '../../Authprovider';
 
 const Loging = () => {
 
-    const {LoginUser} = useContext(AuthContext)
+    const {loginUser} = useContext(AuthContext)
+
+    const from = location.state?.from?.pathname || '/'
 
     const TypeRef = useRef(null)
     const [disabled, setDisabled] = useState(true)
@@ -25,7 +27,7 @@ const Loging = () => {
         console.log(email,password)
 
       
-        LoginUser(email, password)
+        loginUser(email, password)
         .then(result => {
             console.log(result.user)
             Nevigate('/')

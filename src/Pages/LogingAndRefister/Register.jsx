@@ -2,40 +2,54 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../Authprovider';
+import axios from 'axios';  // Make sure to import axios
+import GoogleButton from './GoogleButton';
 
 const Register = () => {
     const TypeRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
-    const { CreateUser } = useContext(AuthContext);
+    const { createUser } = useContext(AuthContext);
+    
+    const from = location.state?.from?.pathname || '/';
 
+    // Captcha Engine Load করার জন্য useEffect ব্যবহার করা হয়েছে
     useEffect(() => {
-        loadCaptchaEnginge(6);
+        loadCaptchaEnginge(6); // এখানে ৬ সংখ্যার ক্যাপচা থাকবে
     }, []);
 
-    const handleRegister = e => {
+    const handleRegister = (e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(name, email, password);
 
-        CreateUser(email, password)
+        createUser(email, password)
             .then(result => {
                 console.log(result.user);
+                
+                const userInfo = { name, email };
+                
+                // User data backend এ পাঠানোর জন্য axios ব্যবহার করা হচ্ছে
+                axios.post('http://localhost:5000/Users', userInfo)
+                    .then(res => {
+                        console.log(res.data.insertedId, 'user added to database');
+                    })
+                    .catch(error => {
+                        console.error('Error adding user to the database:', error);
+                    });
             })
             .catch(error => {
-                console.error(error);
-                // setErrorregister(error.message);
+                console.error('Error creating user:', error);
             });
     };
 
     const handleCaptha = () => {
-        const Ref = TypeRef.current.value;
-        if (validateCaptcha(Ref)) {
-            setDisabled(false);
+        const userInput = TypeRef.current.value;  // Captcha input field থেকে মান নেওয়া হচ্ছে
+        if (validateCaptcha(userInput)) {
+            setDisabled(false);  // Captcha সঠিক হলে বাটন সক্রিয় হবে
         } else {
-            setDisabled(true);
+            setDisabled(true);  // সঠিক না হলে বাটন নিষ্ক্রিয় থাকবে
         }
     };
 
@@ -45,8 +59,7 @@ const Register = () => {
                 <div className="text-center lg:text-left">
                     <h1 className="text-5xl font-bold">Register Now</h1>
                     <p className="py-6">
-                        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-                        quasi. In deleniti eaque aut repudiandae et a id nisi.
+                        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
                     </p>
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -67,22 +80,22 @@ const Register = () => {
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" placeholder="password" name='password' className="input input-bordered" required />
-                            <label className="label">
-                                <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                            </label>
+                            <input type="password" placeholder="password" name="password" className="input input-bordered" required />
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <LoadCanvasTemplate />
+                                <LoadCanvasTemplate />  {/* Captcha এর জন্য Template */}
                             </label>
-                            <input type="text" ref={TypeRef} placeholder="Type here" name='Captha' className="input input-bordered" required />
-                            <button onClick={handleCaptha} className="btn btn-outline btn-xs mt-3">Validate</button>
+                            <input type="text" ref={TypeRef} placeholder="Type here" name="Captcha" className="input input-bordered" required />
+                            <button type="button" onClick={handleCaptha} className="btn btn-outline btn-xs mt-3">Validate</button>
                         </div>
                         <div className="form-control mt-6">
-                            <button disabled={disabled} className="btn btn-primary">Register</button>
+                            <button type="submit" disabled={disabled} className="btn btn-primary">Register</button>
                         </div>
-                        <p>You already have an account? <Link className="btn btn-link" to='/loging'>Log in</Link></p>
+                        <div className='flex'>
+                        <p>Already have an account? <Link className="btn btn-link" to='/loging'>Log in</Link></p>
+                        <p className='pt-3 right-3'><GoogleButton></GoogleButton></p>
+                        </div>
                     </form>
                 </div>
             </div>

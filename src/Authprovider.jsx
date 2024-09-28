@@ -1,46 +1,93 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { app } from './Firebase.confid';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
+import { 
+    getAuth, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    createUserWithEmailAndPassword, 
+    GoogleAuthProvider, 
+    signInWithPopup 
+} from 'firebase/auth';
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
 
-const Authprovider = ({ children }) => {
+const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [cart, setCart] = useState([]);
 
-    const CreateUser = (email, password) => {
-        return createUserWithEmailAndPassword(auth, email, password);
-    }
+    const provider = new GoogleAuthProvider();
 
-    const LoginUser = (email, password) => {
+    // Create a new user
+    const createUser = async (email, password) => {
         setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password);
-    }
+        try {
+            return await createUserWithEmailAndPassword(auth, email, password);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const Logout = () => {
+    // Sign in with Google
+    const signInWithGoogle = async () => {
         setLoading(true);
-        return signOut(auth);
-    }
+        try {
+            return await signInWithPopup(auth, provider);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    // Log in an existing user
+    const loginUser = async (email, password) => {
+        setLoading(true);
+        try {
+            return await signInWithEmailAndPassword(auth, email, password);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Log out the user
+    const logout = async () => {
+        setLoading(true);
+        try {
+            return await signOut(auth);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Fetch cart data if user is logged in
+    useEffect(() => {
+        if (user?.email) {
+            fetch(`http://localhost:5000/Cart?email=${user.email}`)
+                .then(res => res.json())
+                .then(data => setCart(data))
+                .catch(error => console.error('Error fetching cart data:', error));
+        }
+    }, [user]);
+
+    // Track user authentication state
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            console.log('user', currentUser);
             setLoading(false);
         });
 
-        return () => {
-            unsubscribe();
-        }
+        return () => unsubscribe();
     }, []);
 
     const authInfo = {
         user,
         loading,
-        CreateUser,
-        LoginUser,
-        Logout
+        cart,
+        createUser,
+        loginUser,
+        signInWithGoogle,
+        logout
     };
 
     return (
@@ -50,4 +97,4 @@ const Authprovider = ({ children }) => {
     );
 };
 
-export default Authprovider;
+export default AuthProvider;
