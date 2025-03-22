@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import daisyui from 'daisyui'; // ES Module import ব্যবহার করুন
+
 export default {
   content: [
     "./index.html",
@@ -8,7 +10,6 @@ export default {
     extend: {},
   },
   plugins: [
-    require('daisyui'),
+    daisyui, // সরাসরি import করা প্লাগিন ব্যবহার করুন
   ],
 }
-

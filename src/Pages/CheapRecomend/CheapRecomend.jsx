@@ -32,7 +32,7 @@ const CheapRecomend = () => {
 
             </Sectiontittle>
 
-            <div className='grid grid-cols-3 gap-10'>
+            <div className='grid grid-cols-3 gap-10 container mx-auto  max-w-[1320px]'>
                {
                 Salads.slice(0, slice).map(item => <CheapRecomends
                     key={item._id}
@@ -40,10 +40,10 @@ const CheapRecomend = () => {
                 ></CheapRecomends>)
                }
             </div>
-            <div className='text-center mb-16'>
+            <div className='text-center mb-16 mt-5'>
             
                  <div className={slice === menu.length && 'hidden'}>
-                <button className='btn btn-outline btn-primary' onClick={() => Setslice(menu.length)} >Show All Carts</button>
+                <button className='btn btn-outline btn-primary mr-10' onClick={() => Setslice(menu.length)} >Show All Carts</button>
                 </div> 
 
 

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const MenuCategory = ({item,coverImg,tittle}) => {
     return (
-       <section>
+       <section className=' max-w-[1570px] container mx-auto'>
           {tittle && <CoverOne img={coverImg} 
                tittle={tittle}
                ></CoverOne>} 
@@ -18,7 +18,7 @@ const MenuCategory = ({item,coverImg,tittle}) => {
                 }
             </div>
 
-            <div className='text-center'> 
+            <div className='text-center mt-14'> 
             <Link to={`/order/${tittle}`}>
             <button className="btn btn-outline">Order your favourite food</button>
             </Link>

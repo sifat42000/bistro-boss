@@ -24,7 +24,7 @@ const Testmonial = () => {
     }, [])
 
     return (
-        <section>
+        <section className='max-w-[1400px] conatiner mx-auto'>
             <Sectiontittle
                 heading='TESTIMONIALS'
                 subHeading='What Our Clients Say'
@@ -39,7 +39,7 @@ const Testmonial = () => {
                     >
                         <div className='m-24'>
 
-                           <div className='pl-96 mb-10'>
+                           <div className='flex justify-center  mb-10'>
                            <Rating
                                 style={{ maxWidth: 180 }}
                                 value={revieww.rating}
